@@ -1,0 +1,27 @@
+@AbapCatalog.sqlViewName: 'ZZC_SALESNEW'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Sales Data'
+
+@OData.publish: true
+
+define view  ZZC_SalesData as select from vbak
+association [0..1] to tvak as _newtypehelp on $projection.auart = _newtypehelp.auart
+
+{
+@EndUserText.label: 'Sales Order Number'
+@EndUserText.quickInfo: 'This is the sales order number'
+@UI.lineItem: [{position: 10, importance: #HIGH }]
+@UI.selectionField: [{position: 10 }]
+key vbeln, 
+@UI.lineItem: [{position: 20, importance: #HIGH }]
+@UI.selectionField: [{position: 20 }]
+erdat, 
+@UI.lineItem: [{position: 30, importance: #HIGH }]
+@UI.selectionField: [{position: 30 }]
+
+@ObjectModel.foreignKey.association: '_newtypehelp'
+auart,
+_newtypehelp
+}
