@@ -1,0 +1,15 @@
+@AbapCatalog.sqlViewName: 'ZDEMOJOIN'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Join Demo'
+define view ZZ_JOINDEMO as select from ekpo as PO 
+inner  join eban as PR 
+    on PO.banfn = PR.banfn and 
+       PO.bnfpo = PR.bnfpo
+{
+    PO.ebeln as PO_Number, 
+    PO.matnr as Material,  
+    PR.banfn as PR_Number, 
+    PR.bnfpo as PR_Item_Number
+}
