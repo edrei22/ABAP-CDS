@@ -1,0 +1,15 @@
+@AbapCatalog.sqlViewName: 'ZZI_SOTEXT'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Sales Org Text'
+
+@VDM.viewType: #BASIC
+@ObjectModel.dataCategory: #TEXT
+
+define view ZZI_SalesorgText as select from tvkot
+{
+   key spras as Spras,
+   key vkorg as Vkorg,
+   vtext as Vtext
+}
