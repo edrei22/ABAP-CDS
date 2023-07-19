@@ -1,0 +1,19 @@
+@AbapCatalog.sqlViewName: 'ZZI_SORDER'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Sales Order Details'
+
+@VDM.viewType: #BASIC 
+@Analytics.dataCategory: #FACT 
+
+define view ZZI_Salesorderfact as select from vbak 
+{
+  key vbeln as Sales_Order, 
+  erdat as Created_date, 
+  vkorg as Sales_Org, 
+  
+  netwr , 
+  waerk , 
+  kunnr as Sold_to_Party 
+}
