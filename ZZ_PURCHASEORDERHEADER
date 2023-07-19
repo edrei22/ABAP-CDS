@@ -1,0 +1,29 @@
+@AbapCatalog.sqlViewName: 'ZZI_PURORDHDR'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Purchase Order Header'
+
+@VDM.viewType: #BASIC
+@OData.publish: true
+
+define view ZZ_PurchaseOrderHeader as select from ekko
+association [0..*] to ZZ_PurchaseOrderItem as _POItem on $projection.Purchase_Order = _POItem.Purchase_Order
+
+
+{
+  key ebeln as Purchase_Order, 
+  //bsart as Purchase_Order_Type,  
+  case (bsart)
+  when 'ZNAC' then 'National Order' 
+  when 'ZIMP' then 'Import Order' 
+  else 'Other Order' 
+  end as Purchase_Order_Type, 
+  ekorg as Purchase_Order_Organization, 
+  ekgrp as Purchase_Group,  
+  lifnr as Supplier, 
+  waers as Document_Currency, 
+  aedat as Creation_Date,
+  @ObjectModel.association.type: [#TO_COMPOSITION_CHILD]  
+  _POItem
+}
