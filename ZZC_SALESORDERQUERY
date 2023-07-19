@@ -1,0 +1,38 @@
+@AbapCatalog.sqlViewName: 'ZZC_SOQUERY'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck:#NOT_REQUIRED
+@EndUserText.label: 'Sales Order Query'
+@VDM.viewType: #CONSUMPTION
+@Analytics.query: true
+@OData.publish: true 
+
+define view ZZC_SalesOrderQuery 
+with parameters p_curr1 : waerk, 
+                p_date1 : erdat 
+
+as select from ZZI_SalesOrderCube (p_curr: $parameters.p_curr1,
+                                   p_date: $parameters.p_date1)
+{
+  key Sales_Order,
+  Sold_to_Party,
+  land1,
+  Sales_Org,
+  @AnalyticsDetails.query.axis: #ROWS
+  Vtext,
+  Created_date,
+  CalendarYear,
+  CalendarQuarter,
+  --@Consumption.filter : {selectionType: #RANGE, 
+                         --multipleSelections: true, 
+                         --mandatory: false}
+  CalendarMonth,
+  netwr,
+  waerk,
+  new_curr,
+  new_amount,
+  /* Associations */
+  _Caldate,
+  _CUSTDIM,
+  _SOTXT  
+}
