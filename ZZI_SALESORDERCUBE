@@ -1,0 +1,53 @@
+@AbapCatalog.sqlViewName: 'ZZI_SALESORDER'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Sales order details cube'
+
+@VDM.viewType: #COMPOSITE
+@Analytics.dataCategory: #CUBE 
+@OData.publish: true
+
+define view ZZI_SalesOrderCube 
+
+with parameters p_curr : waerk, 
+                p_date : erdat 
+
+as select from ZZI_Salesorderfact
+
+association [1..2] to ZZI_SalesorgText as _SOTXT on $projection.Sales_Org  = _SOTXT.Vkorg
+association [1..1] to ZZI_CUSTDIM as _CUSTDIM on $projection.Sold_to_Party  = _CUSTDIM.kunnr 
+association [1..1] to I_CalendarDate as _Caldate on $projection.Created_date  = _Caldate.CalendarDate
+
+{
+   key Sales_Order, 
+ 
+   Sold_to_Party, 
+   _CUSTDIM.land1,
+   
+   Sales_Org,  
+   _SOTXT[1:Spras='S'].Vtext, 
+   
+   Created_date, 
+   _Caldate.CalendarYear, 
+   _Caldate.CalendarQuarter, 
+   _Caldate.CalendarMonth, 
+   
+   @Semantics.amount.currencyCode: 'waerk' -- asing currency to amount
+   @Aggregation.default: #SUM
+   netwr, 
+   
+   @Semantics.currencyCode: true
+   waerk, 
+   
+   @Semantics.currencyCode: true
+   $parameters.p_curr as new_curr, 
+   
+   @Semantics.amount.currencyCode: 'new_curr' -- asing currency to amount
+   @Aggregation.default: #SUM
+   currency_conversion(amount => netwr, source_currency => waerk, target_currency => :p_curr, exchange_rate_date => :p_date) as new_amount, 
+   
+    _SOTXT, 
+    _CUSTDIM, 
+    _Caldate  // Make association public
+}
