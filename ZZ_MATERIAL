@@ -1,0 +1,12 @@
+@AbapCatalog.sqlViewName: 'ZZMATERIAL'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'MATERIAL TASK'
+define view ZZ_MATERIAL
+  as select from mara
+{
+  key matnr as Material,
+      mtart as Material_type,
+      meins as Base_unit
+}
