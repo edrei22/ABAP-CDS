@@ -1,0 +1,16 @@
+@AbapCatalog.sqlViewName: 'ZZI_CUST_DIM'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Customer details'
+
+@VDM.viewType: #BASIC
+@Analytics.dataCategory: #DIMENSION
+
+@OData.publish: true 
+
+define view ZZI_CUSTDIM as select from kna1
+{
+ key kunnr, 
+ land1
+}
