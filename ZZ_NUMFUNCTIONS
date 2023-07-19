@@ -1,0 +1,26 @@
+@AbapCatalog.sqlViewName: 'ZZNUMFUNC'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Numeric Functions'
+define view ZZ_Num_Functions as select from vbak
+{
+    // Sales document number 
+    key vbeln  as Sales_Document, 
+    // Net price 
+    netwr as Net_Price, 
+    // Runding net price to one decimal place 
+    round(netwr, 1) as Round_price, 
+    // Ceiling of net price 
+    ceil(netwr) as Ceil_price, 
+    // Floor of net price 
+    floor(netwr) as Floor_price, 
+    // Divided net price by three 
+    div(netwr,3) as Div_price_1, 
+    // Divided net price by three rounded to two decimal places 
+    division(netwr, 3, 2) as Div_price_2, 
+    // Remiander operation
+    mod(10,3) as Mod_op, 
+    // Fixed absolute value 
+    abs(-10) as Abs_op
+}
