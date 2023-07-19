@@ -1,0 +1,16 @@
+@AbapCatalog.sqlViewName: 'ZZDEM_UNION'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true         
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Demo Union'
+define view ZZ_DEMO_UNION as select from eban
+{
+   matnr as material
+}
+where werks = 'AP01'
+union all 
+select from ekpo 
+{
+    matnr as material 
+}
+where werks = 'AP01'
